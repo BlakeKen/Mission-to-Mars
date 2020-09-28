@@ -7,7 +7,10 @@ import datetime as dt
 
 def scrape_all():
     # Initiate headless driver for deployment
-    browser = Browser("chrome", executable_path="chromedriver", headless=True)
+    # # Set the executable path and initialize the chrome browser in splinter
+    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    browser = Browser('chrome', **executable_path, headless=True)
+   # browser = Browser("chrome", executable_path="chromedriver", headless=True)
 
     news_title, news_paragraph = mars_news(browser)
 
@@ -24,9 +27,7 @@ def scrape_all():
     browser.quit()
     return data
 
-# Set the executable path and initialize the chrome browser in splinter
-executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
-browser = Browser('chrome', **executable_path)
+
 
 def mars_news(browser):
 
@@ -103,11 +104,11 @@ def mars_facts():
         return None
 
     # Assign columns and set index of dataframe
-    df.columns=['description', 'value']
-    df.set_index('description', inplace=True)
+    df.columns=['Description', 'Value']
+    df.set_index('Description', inplace=True)
     
     # Convert dataframe into HTML format, add bootstrap
-    df.to_html()
+    return df.to_html()
 
 if __name__ == "__main__":
     # If running as script, print scraped data
